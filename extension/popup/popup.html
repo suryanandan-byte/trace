@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traceit</title>
+
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Traceit</h1>
+            <p>Web Performance Investigator</p>
+        </div>
+
+        <div class="section">
+
+            <div class="label">Current Page</div>
+
+            <div class="info-box">
+                <span class="info-title">URL</span>
+                <span id="page-url" class="info-value">
+                    Detecting...
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-title">Title</span>
+                <span id="page-title" class="info-value">
+                    Detecting...
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-title">Tab ID</span>
+                <span id="tab-id" class="info-value">
+                    Detecting...
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-title">Viewport</span>
+                <span id="viewport" class="info-value">
+                    Detecting...
+                </span>
+            </div>
+
+        </div>
+
+        <button id="analyze-btn">
+            Analyze Page
+        </button>
+
+        <div id="status" class="status">
+            Ready
+        </div>
+
+    </div>
+    <script type="module" src="popup.js"></script>
+</body>
+</html>

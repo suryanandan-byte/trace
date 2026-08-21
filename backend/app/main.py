@@ -1,6 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.api.routes.browser import router as browser_router
 from app.schemas.page import PageInfo
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+
+    allow_origins=["*"],
+
+    allow_credentials=True,
+
+    allow_methods=["*"],
+
+    allow_headers=["*"],
+)
+app.include_router(browser_router)
 @app.get("/")
 async def root():
     return {"message": "Trace2Prompt API"}

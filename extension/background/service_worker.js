@@ -1,0 +1,1 @@
+console.log("Trace2Prompt background service worker started");
