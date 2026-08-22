@@ -49,11 +49,27 @@
                 </span>
             </div>
 
+            <div class="info-box">
+                <span class="info-title">Network Requests</span>
+                <span id="request-count" class="info-value">
+                    0
+                </span>
+            </div>
+
         </div>
 
         <button id="analyze-btn">
             Analyze Page
         </button>
+
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button id="start-trace-btn" style="flex: 1;">
+                Start Tracing
+            </button>
+            <button id="stop-trace-btn" style="flex: 1;" disabled>
+                Stop Tracing
+            </button>
+        </div>
 
         <div id="status" class="status">
             Ready

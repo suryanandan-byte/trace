@@ -94,6 +94,16 @@ async function loadPageInformation() {
             console.error("Viewport error:", error);
         }
 
+        // Trace Status
+        chrome.runtime.sendMessage({
+            type: "GET_TRACE_STATUS",
+            tabId: currentTab.id
+        }, (response) => {
+            if (response) {
+                document.getElementById("request-count").textContent = response.requestCount;
+                updateTraceButtons(response.isAttached);
+            }
+        });
 
         setStatus("Ready");
 
@@ -198,6 +208,57 @@ document
 
     });
 
+
+// ------------------------------------
+// Tracing buttons
+// ------------------------------------
+
+function updateTraceButtons(isAttached) {
+    document.getElementById("start-trace-btn").disabled = isAttached;
+    document.getElementById("stop-trace-btn").disabled = !isAttached;
+}
+
+document.getElementById("start-trace-btn").addEventListener("click", () => {
+    if (!currentTab) return;
+    setStatus("Attaching debugger...");
+    
+    chrome.runtime.sendMessage({
+        type: "START_TRACE",
+        tabId: currentTab.id
+    }, (response) => {
+        if (response && response.success) {
+            setStatus("Debugger attached");
+            document.getElementById("request-count").textContent = "0";
+            updateTraceButtons(true);
+        } else {
+            setStatus("Failed to attach debugger");
+        }
+    });
+});
+
+document.getElementById("stop-trace-btn").addEventListener("click", () => {
+    if (!currentTab) return;
+    setStatus("Detaching debugger...");
+    
+    chrome.runtime.sendMessage({
+        type: "STOP_TRACE",
+        tabId: currentTab.id
+    }, (response) => {
+        if (response && response.success) {
+            setStatus("Debugger detached");
+            updateTraceButtons(false);
+        } else {
+            setStatus("Failed to detach debugger");
+        }
+    });
+});
+
+// Listen for network count updates
+chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === "NETWORK_REQUEST_COUNT") {
+        document.getElementById("request-count").textContent = message.count;
+    }
+});
 
 // ------------------------------------
 // Load information when popup opens
